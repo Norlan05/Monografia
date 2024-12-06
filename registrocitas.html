@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Registro citas</title>
+    <title>Admin Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -19,6 +19,18 @@
     <link
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <!-- Agregar Bootstrap desde CDN para estilos de botones -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <!-- Incluye SweetAlert2 CSS y JS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
@@ -147,13 +159,193 @@
 
       <!-- Content Wrapper -->
       <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Fin del contenido principal -->
-      </div>
-      <!-- Fin del contenedor de contenido -->
-    </div>
-    <!-- Fin del envoltorio de la página -->
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <nav
+            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <!-- Sidebar Toggle (Topbar) -->
+            <form class="form-inline">
+              <button
+                id="sidebarToggleTop"
+                class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+              </button>
+            </form>
 
-    <!-- Botón para subir -->
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+              <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+              <li class="nav-item dropdown no-arrow d-sm-none">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="searchDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+                  <i class="fas fa-search fa-fw"></i>
+                </a>
+                <!-- Dropdown - Messages -->
+              </li>
+
+              <li class="nav-item dropdown no-arrow">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+                    >Dr Toruño</span
+                  >
+                  <img
+                    class="img-profile rounded-circle"
+                    src="img/undraw_profile.svg" />
+                </a>
+                <!-- Dropdown - User Information -->
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="userDropdown">
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#logoutModal">
+                    <i
+                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Page Heading -->
+            <!-- Formulario de Reservas -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Reservar una Cita
+                </h6>
+              </div>
+              <div class="card-body">
+                <form id="reservation-form" class="form" action="#">
+                  <div class="row">
+                    <!-- Campo para el nombre -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="first-name">Nombre:</label>
+                        <input
+                          type="text"
+                          id="first-name"
+                          name="first-name"
+                          placeholder="Nombre"
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para el apellido -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="last-name">Apellido:</label>
+                        <input
+                          type="text"
+                          id="last-name"
+                          name="last-name"
+                          placeholder="Apellido"
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para el correo electrónico -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          placeholder="Correo Electrónico"
+                          required
+                          class="form-control"
+                          pattern="^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$"
+                          title="Ingresa un correo electrónico válido (ej: usuario@dominio.com)" />
+                        <span id="email-error" class="error-message"></span>
+                      </div>
+                    </div>
+                    <!-- Campo para el número de teléfono -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="phone">Número de Teléfono:</label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          placeholder="Número de Teléfono"
+                          required
+                          class="form-control"
+                          pattern="^(\+505\d{8}|\d{8})$"
+                          title="El número debe tener 8 dígitos o incluir el prefijo +505." />
+                        <span id="phone-error" class="error-message"></span>
+                      </div>
+                    </div>
+                    <!-- Campo para la fecha -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="date">Selecciona una fecha:</label>
+                        <input
+                          type="date"
+                          id="date"
+                          name="date"
+                          placeholder="Fecha"
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para la hora -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="time">Selecciona una hora:</label>
+                        <select
+                          id="time"
+                          name="time"
+                          required
+                          class="form-control"></select>
+                      </div>
+                    </div>
+                    <!-- Mensaje de error -->
+                    <div id="message" class="message"></div>
+                  </div>
+                  <!-- Botón de envío -->
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-12">
+                      <button type="submit" class="btn btn-primary">
+                        Reservar Cita
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
@@ -197,19 +389,25 @@
       </div>
     </div>
 
-    <!-- JavaScript básico de Bootstrap -->
+    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- JavaScript de plugins principales -->
+    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Scripts personalizados para todas las páginas -->
+    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Plugins a nivel de página -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Scripts personalizados a nivel de página -->
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    <!-- Incluir el script mostrarReserva.js -->
+    <script src="js/mostrarreserva.js"></script>
+    <script src="js/citas.js"></script>
   </body>
 </html>
