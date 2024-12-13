@@ -294,6 +294,94 @@
           <!-- End of Main Content -->
 
           <!-- /.container-fluid -->
+          <div class="container-fluid">
+            <!-- Formulario de Registro de Paciente -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Registrar Nuevo Paciente
+                </h6>
+              </div>
+              <div class="card-body">
+                <form action="registro-paciente.php" method="POST">
+                  <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                      <label for="nombre">Nombre</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        name="nombre"
+                        required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="apellido">Apellido</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="apellido"
+                        name="apellido"
+                        required />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                      <label for="correo">Correo Electrónico</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="correo"
+                        name="correo"
+                        required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="telefono">Teléfono</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="telefono"
+                        name="telefono"
+                        required />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                      <label for="cedula">Cédula</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="cedula"
+                        name="cedula"
+                        required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="fechaNacimiento"
+                        name="fechaNacimiento"
+                        required />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                      <label for="direccion">Dirección</label>
+                      <textarea
+                        class="form-control"
+                        id="direccion"
+                        name="direccion"
+                        rows="3"
+                        required></textarea>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    Registrar Paciente
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- Fin del contenido principal -->
       </div>

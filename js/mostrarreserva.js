@@ -1,10 +1,10 @@
-const apiUrl = "http://Clinica.somee.com/api/select/GetAllReservations"; // Cambia esto a la URL de tu API
+const Url = "https://Clinica.somee.com/api/Select/GetAllReservations"; // URL de la API
 
 let dataTable; // Variable para almacenar la instancia de DataTable
 
 // Función para obtener las reservas desde la API
 function fetchReservas() {
-  fetch(apiUrl)
+  fetch(Url)
     .then((response) => response.json())
     .then((reservas) => {
       console.log("Reservas obtenidas:", reservas); // Verifica los datos obtenidos
@@ -15,30 +15,15 @@ function fetchReservas() {
     });
 }
 
-// Función para separar la fecha y hora
-function separarFechaHora(fechaHora) {
-  const fecha = new Date(fechaHora); // Convierte el string en un objeto Date
-  const opcionesFecha = { year: "numeric", month: "2-digit", day: "2-digit" };
-  const opcionesHora = {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  };
-
-  // Obtiene la fecha y la hora con el formato adecuado
-  const fechaFormateada = fecha.toLocaleDateString("es-ES", opcionesFecha); // Formato: "dd/mm/yyyy"
-  const horaFormateada = fecha.toLocaleTimeString("es-ES", opcionesHora); // Formato: "hh:mm:ss"
-
-  // Convertir la hora a segundos desde medianoche para ordenarla correctamente
-  const seconds =
-    fecha.getHours() * 3600 + fecha.getMinutes() * 60 + fecha.getSeconds();
-
-  return {
-    fecha: fechaFormateada,
-    hora: horaFormateada,
-    rawDate: fecha,
-    seconds,
-  }; // Devolver los segundos para la ordenación
+// Función para convertir la hora de 24 horas a 12 horas (con AM/PM)
+function convertirHoraAMPM(hora) {
+  let [h, m] = hora.split(":"); // Divide la hora y los minutos
+  h = parseInt(h); // Convierte la hora a un número entero
+  const ampm = h >= 12 ? "PM" : "AM"; // Determina si es AM o PM
+  h = h % 12; // Convierte a formato de 12 horas
+  h = h ? h : 12; // El 0 se convierte en 12
+  m = m || "00"; // Si los minutos no están definidos, se ponen a 00
+  return `${h}:${m} ${ampm}`; // Retorna la hora en formato 12 horas con AM/PM
 }
 
 // Función para mostrar las reservas en la tabla
@@ -52,29 +37,29 @@ function displayReservas(reservas) {
 
   // Filtrar las reservas para que solo se muestren las fechas desde hoy en adelante
   const reservasFiltradas = reservas.filter((reserva) => {
-    const { rawDate } = separarFechaHora(reserva.fecha_hora);
-    return rawDate >= today; // Solo mostrar reservas desde hoy en adelante
+    const reservaDate = new Date(reserva.fecha); // Convertir la fecha de la reserva a un objeto Date
+    return reservaDate >= today; // Solo mostrar reservas desde hoy en adelante
   });
 
   // Verificar si hay reservas
   if (reservasFiltradas.length > 0) {
+    // Mapeamos las reservas para que cada reserva tenga los datos que vamos a mostrar
     const formattedReservas = reservasFiltradas.map((reserva) => {
-      const { fecha, hora, seconds } = separarFechaHora(reserva.fecha_hora); // Separar fecha, hora y segundos
+      const horaFormateada = convertirHoraAMPM(reserva.hora); // Convertir la hora a formato 12 con AM/PM
       return [
         reserva.nombre,
         reserva.apellido,
         reserva.correo_electronico,
         reserva.numero_telefono,
-        fecha,
-        hora,
-        seconds, // Agregar los segundos para la ordenación
-      ]; // Cada subarreglo tiene 7 elementos (incluyendo 'seconds' para ordenación)
+        reserva.fecha,
+        horaFormateada,
+      ];
     });
 
     // Inicializar o actualizar DataTable
     if (!$.fn.dataTable.isDataTable("#dataTable")) {
       dataTable = $("#dataTable").DataTable({
-        data: formattedReservas, // Los datos mapeados correctamente
+        data: formattedReservas,
         columns: [
           { title: "Nombre" },
           { title: "Apellido" },
@@ -82,10 +67,10 @@ function displayReservas(reservas) {
           { title: "Teléfono" },
           { title: "Fecha" },
           { title: "Hora" },
-        ], // Define explícitamente las columnas
+        ],
         responsive: true,
         stateSave: true, // Mantener el estado de la tabla (como la paginación)
-        order: [[6, "asc"]], // Ordenar por la columna 'seconds' (índice 6) de forma ascendente
+        order: [[4, "asc"]], // Ordenar por la columna 'Fecha' (índice 4) de forma ascendente
         language: {
           search: "Buscar:",
           lengthMenu: "Mostrar _MENU_ entradas",
@@ -98,21 +83,16 @@ function displayReservas(reservas) {
             previous: "Anterior",
           },
         },
-        columnDefs: [
-          {
-            targets: 6, // Columna 'seconds'
-            visible: false, // Hacer que la columna de segundos no sea visible
-          },
-        ],
       });
     } else {
-      dataTable.clear(); // Limpiar la tabla
-      dataTable.rows.add(formattedReservas); // Agregar nuevas filas
-      dataTable.draw(); // Redibujar la tabla
+      dataTable.clear();
+      dataTable.rows.add(formattedReservas);
+      dataTable.draw();
     }
   } else {
+    // Si no hay reservas, mostrar un mensaje
     const row = document.createElement("tr");
-    row.innerHTML = `<td colspan="6">No hay reservas disponibles</td>`;
+    row.innerHTML = `<td colspan="6" class="text-center">No hay reservas disponibles</td>`;
     tableBody.appendChild(row); // Añadir un mensaje si no hay reservas
   }
 }
@@ -120,5 +100,5 @@ function displayReservas(reservas) {
 // Llamar a la función para obtener las reservas cuando se carga la página
 window.onload = fetchReservas;
 
-// Actualización automática de reservas cada 3 segundos
+// Actualización automática de reservas cada 30 segundos
 setInterval(fetchReservas, 30000);
