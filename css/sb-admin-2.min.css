@@ -10324,3 +10324,82 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+/* General table styling */
+#dataTable {
+  width: 100%; /* Asegura que la tabla ocupe todo el ancho */
+  border-collapse: collapse; /* Elimina los espacios entre las celdas */
+}
+
+/* Table header styling */
+#dataTable th {
+  background-color: #f4f4f4; /* Fondo claro para los encabezados */
+  color: #333; /* Color de texto para los encabezados */
+  padding: 10px; /* Espaciado dentro de las celdas del encabezado */
+  text-align: left; /* Alineación a la izquierda para los encabezados */
+  font-weight: bold; /* Negrita para los encabezados */
+}
+
+/* Table body styling */
+#dataTable td {
+  padding: 10px; /* Espaciado dentro de las celdas */
+  border: 1px solid #ddd; /* Borde gris para las celdas */
+  text-align: left; /* Alineación a la izquierda del texto */
+  vertical-align: middle; /* Alineación vertical centrada */
+}
+
+/* Evitar que el texto largo se divida en varias líneas */
+#dataTable td,
+#dataTable th {
+  word-wrap: normal; /* Deshabilitar el ajuste de palabra */
+  overflow: hidden; /* Asegura que el contenido largo se oculte si se desborda */
+  white-space: nowrap; /* Impide que el texto se divida en varias líneas */
+}
+
+/* Ajustar el ancho de las celdas para que los correos electrónicos no se corten */
+#dataTable th:nth-child(4),
+#dataTable td:nth-child(4) {
+  max-width: 300px; /* Ajustar el tamaño máximo de la columna de correo */
+  overflow: hidden; /* Ocultar el contenido que se desborda */
+  white-space: nowrap; /* Impide que el correo se parta en varias líneas */
+  text-overflow: ellipsis; /* Agregar "..." al final si el contenido es demasiado largo */
+}
+
+/* Estilo de fila alternada para mejorar la legibilidad */
+#dataTable tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Fondo gris claro para filas impares */
+}
+
+#dataTable tr:nth-child(even) {
+  background-color: #fff; /* Fondo blanco para filas pares */
+}
+
+/* Estilo para la tabla cuando no hay datos */
+#dataTable td.text-center {
+  text-align: center; /* Centrar el mensaje cuando no hay datos */
+  padding: 20px;
+  font-style: italic; /* Añadir estilo cursiva al mensaje */
+  color: #999; /* Color gris para el texto */
+}
+
+/* Agregar un efecto de hover sobre las filas de la tabla */
+#dataTable tr:hover {
+  background-color: #f1f1f1; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+/* Responsive: Ajustes para pantallas pequeñas */
+@media (max-width: 767px) {
+  #dataTable th,
+  #dataTable td {
+    padding: 5px; /* Reducir el espaciado en pantallas pequeñas */
+  }
+
+  #dataTable th {
+    font-size: 12px; /* Reducir el tamaño de la fuente en encabezados */
+  }
+
+  /* Hacer que la tabla se desplace horizontalmente en pantallas pequeñas */
+  #dataTable {
+    display: block;
+    overflow-x: auto;
+  }
+}

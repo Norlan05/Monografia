@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("reservation-form");
+  const firstName = document.getElementById("first-name");
+  const lastName = document.getElementById("last-name");
   const dateInput = document.getElementById("date");
+  const cedula = document.getElementById("cedula");
   const timeSelect = document.getElementById("time");
   const phoneInput = document.getElementById("phone");
   const phoneErrorDiv = document.getElementById("phone-error");
@@ -96,18 +99,19 @@ document.addEventListener("DOMContentLoaded", () => {
     reservations[reservationKey] = true;
     localStorage.setItem("reservations", JSON.stringify(reservations));
 
-    // Datos a enviar a la API
-    const data_info = {
-      nombre: document.getElementById("first-name").value,
-      apellido: document.getElementById("last-name").value,
+    // Construir el objeto con los datos para enviar al servidor
+    const reservaData = {
+      nombre: firstName.value,
+      apellido: lastName.value,
       correo_electronico: email,
       numero_telefono: phone,
+      Cedula: cedula.value,
       fecha: date,
       hora: time,
     };
 
     // Llamar a la API
-    get_parameter(data_info);
+    get_parameter(reservaData);
 
     showAlert("¡Reserva realizada con éxito!", "success");
     form.reset();
@@ -129,11 +133,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!response.ok) {
         showAlert("Error al enviar los datos. Inténtalo de nuevo.", "error");
+        console.log(response); // Esto te ayudará a ver la respuesta del servidor
         return;
       }
 
       const result = await response.json();
-      console.log(result);
+      console.log(result); // Para ver el resultado en consola
     } catch (error) {
       console.error(error);
       showAlert("Error en el envío de datos. Inténtalo más tarde.", "error");
@@ -150,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
       confirmButtonText: "Aceptar",
     });
   }
+
   // **Limpiar reservas**
   function clearReservations() {
     localStorage.removeItem("reservations");

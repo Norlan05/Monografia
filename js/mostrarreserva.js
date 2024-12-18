@@ -1,10 +1,12 @@
-const Url = "https://Clinica.somee.com/api/Select/GetAllReservations"; // URL de la API
+// URL de la API para obtener todas las reservas
+const apiUrl = "https://Clinica.somee.com/api/Select/GetAllReservations";
 
-let dataTable; // Variable para almacenar la instancia de DataTable
+// Variable para almacenar la instancia de DataTable
+let dataTable;
 
 // Función para obtener las reservas desde la API
 function fetchReservas() {
-  fetch(Url)
+  fetch(apiUrl)
     .then((response) => response.json())
     .then((reservas) => {
       console.log("Reservas obtenidas:", reservas); // Verifica los datos obtenidos
@@ -49,10 +51,14 @@ function displayReservas(reservas) {
       return [
         reserva.nombre,
         reserva.apellido,
+        reserva.cedula,
         reserva.correo_electronico,
         reserva.numero_telefono,
         reserva.fecha,
         horaFormateada,
+        reserva.estado,
+        `<button class="btn btn-primary" onclick="updateReserva(${reserva.id}, 'Confirmado')">Confirmar</button>
+         <button class="btn btn-danger" onclick="updateReserva(${reserva.id}, 'Rechazado')">Rechazar</button>`,
       ];
     });
 
@@ -63,14 +69,17 @@ function displayReservas(reservas) {
         columns: [
           { title: "Nombre" },
           { title: "Apellido" },
+          { title: "Cedula" },
           { title: "Correo Electrónico" },
           { title: "Teléfono" },
           { title: "Fecha" },
           { title: "Hora" },
+          { title: "Estado" },
+          { title: "Acciones" },
         ],
         responsive: true,
         stateSave: true, // Mantener el estado de la tabla (como la paginación)
-        order: [[4, "asc"]], // Ordenar por la columna 'Fecha' (índice 4) de forma ascendente
+        order: [[6, "asc"]], // Ordenar por la columna 'Fecha' (índice 6) de forma ascendente
         language: {
           search: "Buscar:",
           lengthMenu: "Mostrar _MENU_ entradas",
@@ -92,7 +101,7 @@ function displayReservas(reservas) {
   } else {
     // Si no hay reservas, mostrar un mensaje
     const row = document.createElement("tr");
-    row.innerHTML = `<td colspan="6" class="text-center">No hay reservas disponibles</td>`;
+    row.innerHTML = `<td colspan="9" class="text-center">No hay reservas disponibles</td>`;
     tableBody.appendChild(row); // Añadir un mensaje si no hay reservas
   }
 }
