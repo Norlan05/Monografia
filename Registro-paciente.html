@@ -254,67 +254,93 @@
                 </h6>
               </div>
               <div class="card-body">
-                <form action="registro-paciente.php" method="POST">
+                <form id="reservation-form" class="form" action="#">
                   <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                      <label for="nombre">Nombre</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="nombre"
-                        name="nombre"
-                        required />
+                    <!-- Campo para el nombre -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="first-name">Nombre:</label>
+                        <input
+                          type="text"
+                          id="first-name"
+                          name="first-name"
+                          placeholder="Nombre"
+                          required
+                          class="form-control" />
+                      </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="apellido">Apellido</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="apellido"
-                        name="apellido"
-                        required />
+                    <!-- Campo para el apellido -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="last-name">Apellido:</label>
+                        <input
+                          type="text"
+                          id="last-name"
+                          name="last-name"
+                          placeholder="Apellido"
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para el correo electrónico -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          placeholder="Correo Electrónico"
+                          required
+                          class="form-control"
+                          pattern="^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$"
+                          title="Ingresa un correo electrónico válido (ej: usuario@dominio.com)" />
+                        <span id="email-error" class="error-message"></span>
+                      </div>
+                    </div>
+                    <!-- Campo para la cédula -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="cedula">Cédula:</label>
+                        <input
+                          type="text"
+                          id="cedula"
+                          name="cedula"
+                          placeholder="Cédula"
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para el número de teléfono -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="phone">Número de Teléfono:</label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          placeholder="Número de Teléfono"
+                          required
+                          class="form-control"
+                          pattern="^(\+505\d{8}|\d{8})$"
+                          title="El número debe tener 8 dígitos o incluir el prefijo +505." />
+                        <span id="phone-error" class="error-message"></span>
+                      </div>
+                    </div>
+                    <!-- Campo para la fecha de nacimiento -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="birth-date">Fecha de Nacimiento:</label>
+                        <input
+                          type="date"
+                          id="birth-date"
+                          name="birth-date"
+                          required
+                          class="form-control" />
+                      </div>
                     </div>
                   </div>
-                  <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                      <label for="correo">Correo Electrónico</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="correo"
-                        name="correo"
-                        required />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="telefono">Teléfono</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="telefono"
-                        name="telefono"
-                        required />
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                      <label for="cedula">Cédula</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="cedula"
-                        name="cedula"
-                        required />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="fechaNacimiento">Fecha de Nacimiento</label>
-                      <input
-                        type="date"
-                        class="form-control"
-                        id="fechaNacimiento"
-                        name="fechaNacimiento"
-                        required />
-                    </div>
-                  </div>
+                  <!-- Campo para la dirección -->
                   <div class="form-row">
                     <div class="col-md-12 mb-3">
                       <label for="direccion">Dirección</label>
@@ -326,9 +352,16 @@
                         required></textarea>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">
-                    Registrar Paciente
-                  </button>
+                  <!-- Mensaje de error -->
+                  <div id="message" class="message"></div>
+                  <!-- Botón de envío -->
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-12">
+                      <button type="submit" class="btn btn-primary">
+                        Registrar Paciente
+                      </button>
+                    </div>
+                  </div>
                 </form>
               </div>
             </div>
@@ -400,6 +433,7 @@
     <!-- Scripts personalizados a nivel de página -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    <script src="js/validaciones.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/Registro_paciente.js"></script>
   </body>
 </html>
