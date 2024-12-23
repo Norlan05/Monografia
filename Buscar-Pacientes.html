@@ -124,9 +124,9 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-          <a class="nav-link" href="Recetas.html">
-            <i class="fas fa-history"></i>
-            <span>Crear Recetas</span></a
+          <a class="nav-link" href="Consultas.html">
+            <i class="fas fa-book"></i>
+            <span>Consulta de Pacientes</span></a
           >
         </li>
 
@@ -241,10 +241,159 @@
 
           <!-- Comienzo del contenido de la página -->
           <div class="container-fluid">
-            <!-- Page Heading -->
+            <!-- Sección para buscar al paciente -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Buscar Paciente
+                </h6>
+              </div>
+              <div class="card-body">
+                <form id="search-patient-form" class="form-inline" action="#">
+                  <div class="form-group mr-3">
+                    <label for="search-criteria" class="mr-2"
+                      >Buscar por:</label
+                    >
+                    <select id="search-criteria" class="form-control" required>
+                      <option value="cedula">Cédula</option>
+                      <option value="email">Correo Electrónico</option>
+                      <option value="nombre">Nombre</option>
+                    </select>
+                  </div>
+                  <div class="form-group mr-3">
+                    <input
+                      type="text"
+                      id="search-value"
+                      name="search-value"
+                      placeholder="Ingrese el valor de búsqueda"
+                      required
+                      class="form-control" />
+                  </div>
+                  <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+                <!-- Contenedor para mensajes o resultados -->
+                <div id="search-message" class="mt-3"></div>
+              </div>
+            </div>
 
-            <!-- /.container-fluid -->
+            <!-- Sección para actualizar los datos del paciente -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Actualizar Datos del Paciente
+                </h6>
+              </div>
+              <div class="card-body">
+                <form id="update-patient-form" class="form" action="#">
+                  <div class="form-row">
+                    <!-- Campo para el nombre -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="update-first-name">Nombre:</label>
+                        <input
+                          type="text"
+                          id="update-first-name"
+                          name="update-first-name"
+                          value=""
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para el apellido -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="update-last-name">Apellido:</label>
+                        <input
+                          type="text"
+                          id="update-last-name"
+                          name="update-last-name"
+                          value=""
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para el correo electrónico -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="update-email">Correo Electrónico:</label>
+                        <input
+                          type="email"
+                          id="update-email"
+                          name="update-email"
+                          value=""
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para la cédula -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="update-cedula">Cédula:</label>
+                        <input
+                          type="text"
+                          id="update-cedula"
+                          name="update-cedula"
+                          value=""
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para el número de teléfono -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="update-phone">Número de Teléfono:</label>
+                        <input
+                          type="tel"
+                          id="update-phone"
+                          name="update-phone"
+                          value=""
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                    <!-- Campo para la fecha de nacimiento -->
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label for="update-birth-date"
+                          >Fecha de Nacimiento:</label
+                        >
+                        <input
+                          type="date"
+                          id="update-birth-date"
+                          name="update-birth-date"
+                          value=""
+                          required
+                          class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Campo para la dirección -->
+                  <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                      <label for="update-direccion">Dirección</label>
+                      <textarea
+                        class="form-control"
+                        id="update-direccion"
+                        name="update-direccion"
+                        rows="3"
+                        required></textarea>
+                    </div>
+                  </div>
+                  <!-- Mensaje de error -->
+                  <div id="update-message" class="message"></div>
+                  <!-- Botón para guardar cambios -->
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-12">
+                      <button type="submit" class="btn btn-success">
+                        Guardar Cambios
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
+
           <!-- End of Main Content -->
 
           <!-- /.container-fluid -->

@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Registro De Pacientes</title>
+    <title>Consulta de Pacientes</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -18,6 +18,13 @@
       type="text/css" />
     <link
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <!-- Agregar Bootstrap desde CDN para estilos de botones -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
       rel="stylesheet" />
 
     <!-- Custom styles for this template-->
@@ -104,13 +111,13 @@
             <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Registros</h6>
               <a class="collapse-item" href="Registro-paciente.html"
-                >Registrar Paciente</a
+                >Registrar Pacientes</a
               >
               <a class="collapse-item" href="Buscar-Pacientes.html"
                 >Buscar pacientes</a
               >
               <a class="collapse-item" href="Historial-Paciente.html"
-                >Historial del Paciente</a
+                >Historial del Pacientes</a
               >
             </div>
           </div>
@@ -156,11 +163,13 @@
           <nav
             class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
             <!-- Sidebar Toggle (Topbar) -->
-            <button
-              id="sidebarToggleTop"
-              class="btn btn-link d-md-none rounded-circle mr-3">
-              <i class="fa fa-bars"></i>
-            </button>
+            <form class="form-inline">
+              <button
+                id="sidebarToggleTop"
+                class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+              </button>
+            </form>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -177,29 +186,8 @@
                   <i class="fas fa-search fa-fw"></i>
                 </a>
                 <!-- Dropdown - Messages -->
-                <div
-                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                  aria-labelledby="searchDropdown">
-                  <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control bg-light border-0 small"
-                        placeholder="Search for..."
-                        aria-label="Search"
-                        aria-describedby="basic-addon2" />
-                      <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                          <i class="fas fa-search fa-sm"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
               </li>
-              <!-- Nav Item - Alerts -->
 
-              <!-- Elemento de navegación - Información del usuario -->
               <li class="nav-item dropdown no-arrow">
                 <a
                   class="nav-link dropdown-toggle"
@@ -236,144 +224,51 @@
           </nav>
           <!-- End of Topbar -->
 
-          <!-- Comienzo del contenido de la página -->
+          <!-- Begin Page Content -->
           <div class="container-fluid">
-            <!-- Fila de contenido -->
-
-            <!-- /.container-fluid -->
-          </div>
-          <!-- End of Main Content -->
-
-          <!-- /.container-fluid -->
-          <div class="container-fluid">
-            <!-- Formulario de Registro de Paciente -->
+            <!-- Page Heading -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
-                  Registrar Nuevo Paciente
-                </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Citas del Día</h6>
               </div>
               <div class="card-body">
-                <form id="reservation-form" class="form" action="#">
-                  <div class="form-row">
-                    <!-- Campo para el nombre -->
-                    <div class="col-lg-6 col-md-6 col-12">
-                      <div class="form-group">
-                        <label for="first-name">Nombre:</label>
-                        <input
-                          type="text"
-                          id="first-name"
-                          name="first-name"
-                          placeholder="Nombre"
-                          required
-                          class="form-control" />
-                      </div>
-                    </div>
-                    <!-- Campo para el apellido -->
-                    <div class="col-lg-6 col-md-6 col-12">
-                      <div class="form-group">
-                        <label for="last-name">Apellido:</label>
-                        <input
-                          type="text"
-                          id="last-name"
-                          name="last-name"
-                          placeholder="Apellido"
-                          required
-                          class="form-control" />
-                      </div>
-                    </div>
-                    <!-- Campo para el correo electrónico -->
-                    <div class="col-lg-6 col-md-6 col-12">
-                      <div class="form-group">
-                        <label for="email">Correo Electrónico:</label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          placeholder="Correo Electrónico"
-                          required
-                          class="form-control"
-                          pattern="^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$"
-                          title="Ingresa un correo electrónico válido (ej: usuario@dominio.com)" />
-                        <span id="email-error" class="error-message"></span>
-                      </div>
-                    </div>
-                    <!-- Campo para la cédula -->
-                    <div class="col-lg-6 col-md-6 col-12">
-                      <div class="form-group">
-                        <label for="cedula">Cédula:</label>
-                        <input
-                          type="text"
-                          id="cedula"
-                          name="cedula"
-                          placeholder="Cédula"
-                          required
-                          class="form-control" />
-                      </div>
-                    </div>
-                    <!-- Campo para el número de teléfono -->
-                    <div class="col-lg-6 col-md-6 col-12">
-                      <div class="form-group">
-                        <label for="phone">Número de Teléfono:</label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          placeholder="Número de Teléfono"
-                          required
-                          class="form-control"
-                          pattern="^(\+505\d{8}|\d{8})$"
-                          title="El número debe tener 8 dígitos o incluir el prefijo +505." />
-                        <span id="phone-error" class="error-message"></span>
-                      </div>
-                    </div>
-                    <!-- Campo para la fecha de nacimiento -->
-                    <div class="col-lg-6 col-md-6 col-12">
-                      <div class="form-group">
-                        <label for="birth-date">Fecha de Nacimiento:</label>
-                        <input
-                          type="date"
-                          id="birth-date"
-                          name="birth-date"
-                          required
-                          class="form-control" />
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Campo para la dirección -->
-                  <div class="form-row">
-                    <div class="col-md-12 mb-3">
-                      <label for="direccion">Dirección</label>
-                      <textarea
-                        class="form-control"
-                        id="direccion"
-                        name="direccion"
-                        rows="3"
-                        required></textarea>
-                    </div>
-                  </div>
-                  <!-- Mensaje de error -->
-                  <div id="message" class="message"></div>
-                  <!-- Botón de envío -->
-                  <div class="row">
-                    <div class="col-lg-4 col-md-4 col-12">
-                      <button type="submit" class="btn btn-primary">
-                        Registrar Paciente
-                      </button>
-                    </div>
-                  </div>
-                </form>
+                <div class="table-responsive">
+                  <table
+                    class="table table-bordered"
+                    id="dataTable"
+                    width="100%"
+                    cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo Electrónico</th>
+                        <th>Teléfono</th>
+                        <th>Fecha</th>
+                        <th>Cédula</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reservas-table-body">
+                      <!--Las citas se llenarán dinámicamente desde JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Fin del contenido principal -->
-      </div>
-      <!-- Fin del contenedor de contenido -->
-    </div>
-    <!-- Fin del envoltorio de la página -->
 
-    <!-- Botón para subir -->
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
@@ -417,23 +312,24 @@
       </div>
     </div>
 
-    <!-- JavaScript básico de Bootstrap -->
+    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- JavaScript de plugins principales -->
+    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Scripts personalizados para todas las páginas -->
+    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Plugins a nivel de página -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Scripts personalizados a nivel de página -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/Registro_paciente.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    <!-- Incluir el script mostrarReserva.js -->
+    <script src="js/mostrarreserva.js"></script>
   </body>
 </html>
