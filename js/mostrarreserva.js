@@ -1,5 +1,6 @@
 // URL de la API para obtener todas las reservas
 const apiUrl = "https://Clinica.somee.com/api/Select/GetReservas";
+const apiUpdateUrl = "https://Clinica.somee.com/api/Update/Actualizar"; // Endpoint para actualizar el estado
 
 // Variable para almacenar la instancia de DataTable
 let dataTable;
@@ -46,8 +47,8 @@ function displayReservas(reservas) {
         reserva.fecha,
         convertirHoraAMPM(reserva.hora),
         reserva.estado,
-        `<button class="btn btn-primary" onclick="actualizarEstado('${reserva.cedula}', 'Confirmado')">Confirmar</button>
-         <button class="btn btn-danger" onclick="actualizarEstado('${reserva.cedula}', 'Rechazado')">Rechazar</button>`,
+        `<button class="btn btn-primary" onclick="actualizar('${reserva.id}', 'Confirmado',2)">Confirmar</button>
+         <button class="btn btn-danger" onclick="actualizar('${reserva.id}', 'Cancelado',3)">Cancelar</button>`,
       ];
     });
 
@@ -95,29 +96,30 @@ function displayReservas(reservas) {
     tableBody.appendChild(row); // Añadir un mensaje si no hay reservas
   }
 }
-
-// Función para manejar la actualización del estado de la reserva
-function actualizarEstado(cedula, estado) {
-  console.log(`Reserva con cédula ${cedula} actualizada a estado: ${estado}`);
-  // Aquí puedes realizar una solicitud al backend para actualizar el estado de la reserva
-  fetch(`https://Clinica.somee.com/api/Update/ActualizarEstadoReserva`, {
+function actualizar(id, estado, estado_id) {
+  fetch(apiUpdateUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      cedula: cedula,
-      estado: estado,
+      id: id,
+      estado_id: estado_id,
+      descripcion: estado,
     }),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Estado actualizado:", data);
-      fetchReservas(); // Vuelve a cargar las reservas después de la actualización
+    .then((response) => {
+      if (response.ok) {
+        // Verifica si la respuesta fue exitosa (código 200-299)
+        return response.json(); // Si es exitosa, procesa la respuesta como JSON
+      }
+      throw new Error("Error en la respuesta"); // Si no es exitosa, lanza un error
     })
-    .catch((error) => {
-      console.error("Error al actualizar el estado:", error);
-    });
+    .then((data) => {
+      console.log("Success:", data); // Muestra los datos de la respuesta en la consola
+      fetchReservas(); // Aquí es donde se llama la función reserva
+    })
+    .catch((error) => console.error("Error:", error)); // Maneja cualquier error
 }
 
 // Llamar a la función para obtener las reservas cuando se carga la página
