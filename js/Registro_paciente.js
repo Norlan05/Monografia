@@ -27,10 +27,9 @@ document
       );
 
       if (!response.ok) {
+        // Obtener el error como JSON
         const errorDetails = await response.json();
-        throw new Error(
-          `Error: ${response.status} - ${JSON.stringify(errorDetails)}`
-        );
+        throw new Error(errorDetails.error); // Usar el campo 'error' del JSON
       }
 
       const result = await response.json();
@@ -38,6 +37,10 @@ document
       document.getElementById("reservation-form").reset();
     } catch (error) {
       console.error("Error al registrar:", error);
-      Swal.fire("Error", `Hubo un problema: ${error.message}`, "error");
+      Swal.fire(
+        "Error",
+        "Ya existe un paciente con esta cédula o correo electrónico.",
+        "error"
+      );
     }
   });

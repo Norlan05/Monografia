@@ -1,5 +1,5 @@
 // URL de la API para obtener todas las reservas
-const apiUrl = "https://Clinica.somee.com/api/Select/GetAllReservations";
+const apiUrl = "https://Clinica.somee.com/api/Select/GetReservas";
 
 // Variable para almacenar la instancia de DataTable
 let dataTable;
@@ -33,21 +33,10 @@ function displayReservas(reservas) {
   const tableBody = document.querySelector("#reservas-table-body");
   tableBody.innerHTML = ""; // Limpiar la tabla antes de agregar nuevos datos
 
-  // Obtener la fecha actual (sin hora para la comparación)
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Establecer la hora a las 00:00:00 para comparar solo la fecha
-
-  // Filtrar las reservas para que solo se muestren las fechas desde hoy en adelante
-  const reservasFiltradas = reservas.filter((reserva) => {
-    const reservaDate = new Date(reserva.fecha); // Convertir la fecha de la reserva a un objeto Date
-    return reservaDate >= today; // Solo mostrar reservas desde hoy en adelante
-  });
-
   // Verificar si hay reservas
-  if (reservasFiltradas.length > 0) {
+  if (reservas.length > 0) {
     // Mapeamos las reservas para que cada reserva tenga los datos que vamos a mostrar
-    const formattedReservas = reservasFiltradas.map((reserva) => {
-      const horaFormateada = convertirHoraAMPM(reserva.hora); // Convertir la hora a formato 12 con AM/PM
+    const formattedReservas = reservas.map((reserva) => {
       return [
         reserva.nombre,
         reserva.apellido,
@@ -55,10 +44,10 @@ function displayReservas(reservas) {
         reserva.correo_electronico,
         reserva.numero_telefono,
         reserva.fecha,
-        horaFormateada,
+        convertirHoraAMPM(reserva.hora),
         reserva.estado,
-        `<button class="btn btn-primary" onclick="updateReserva(${reserva.id}, 'Confirmado')">Confirmar</button>
-         <button class="btn btn-danger" onclick="updateReserva(${reserva.id}, 'Rechazado')">Rechazar</button>`,
+        `<button class="btn btn-primary" onclick="actualizarEstado('${reserva.cedula}', 'Confirmado')">Confirmar</button>
+         <button class="btn btn-danger" onclick="actualizarEstado('${reserva.cedula}', 'Rechazado')">Rechazar</button>`,
       ];
     });
 
@@ -79,7 +68,7 @@ function displayReservas(reservas) {
         ],
         responsive: true,
         stateSave: true, // Mantener el estado de la tabla (como la paginación)
-        order: [[6, "asc"]], // Ordenar por la columna 'Fecha' (índice 6) de forma ascendente
+        order: [[5, "asc"]], // Ordenar por la columna 'Fecha' (índice 5) de forma ascendente
         language: {
           search: "Buscar:",
           lengthMenu: "Mostrar _MENU_ entradas",
@@ -94,9 +83,10 @@ function displayReservas(reservas) {
         },
       });
     } else {
+      // Si la tabla ya está inicializada, actualizamos sus datos
       dataTable.clear();
-      dataTable.rows.add(formattedReservas);
-      dataTable.draw();
+      dataTable.rows.add(formattedReservas); // Añadir nuevas filas
+      dataTable.draw(); // Redibujar la tabla
     }
   } else {
     // Si no hay reservas, mostrar un mensaje
@@ -104,6 +94,30 @@ function displayReservas(reservas) {
     row.innerHTML = `<td colspan="9" class="text-center">No hay reservas disponibles</td>`;
     tableBody.appendChild(row); // Añadir un mensaje si no hay reservas
   }
+}
+
+// Función para manejar la actualización del estado de la reserva
+function actualizarEstado(cedula, estado) {
+  console.log(`Reserva con cédula ${cedula} actualizada a estado: ${estado}`);
+  // Aquí puedes realizar una solicitud al backend para actualizar el estado de la reserva
+  fetch(`https://Clinica.somee.com/api/Update/ActualizarEstadoReserva`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      cedula: cedula,
+      estado: estado,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Estado actualizado:", data);
+      fetchReservas(); // Vuelve a cargar las reservas después de la actualización
+    })
+    .catch((error) => {
+      console.error("Error al actualizar el estado:", error);
+    });
 }
 
 // Llamar a la función para obtener las reservas cuando se carga la página
