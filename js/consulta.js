@@ -1,9 +1,9 @@
+// Realizar la búsqueda del paciente por cédula o correo
 document
   .getElementById("search-patient-form")
   .addEventListener("submit", function (e) {
     e.preventDefault(); // Evitar el envío del formulario y la recarga de la página
-    // Variable para almacenar la instancia de DataTable
-    let dataTable;
+
     // Obtener los valores de los campos de búsqueda
     const searchCriteria = document.getElementById("search-criteria").value; // cédula o email
     const searchValue = document.getElementById("search-value").value; // Valor de búsqueda (cédula o email)
@@ -42,6 +42,10 @@ document
           document.getElementById("date").value = paciente.fecha; // Fecha de la cita (YYYY-MM-DD)
           document.getElementById("time").value = paciente.hora; // Hora de la cita (12h AM/PM)
 
+          // Guardamos el ID de la reserva en un campo oculto o variable para usarlo después
+          document.getElementById("paciente-id").value = paciente.id; // Guardamos el ID en un campo oculto
+          console.log("ID de la reserva: ", paciente.id); // Puedes verificar en consola que se ha guardado correctamente
+
           // Limpiar cualquier mensaje previo
           document.getElementById("search-message").innerHTML = "";
         } else {
@@ -55,7 +59,7 @@ document
         console.error("Error al realizar la búsqueda:", error);
         document.getElementById(
           "search-message"
-        ).innerHTML = ` No hay reserva para el dia de hoy`;
+        ).innerHTML = `No hay reserva para el día de hoy`;
       });
 
     // Evento para limpiar los campos de búsqueda y los datos del paciente
@@ -76,5 +80,50 @@ document
 
         // Limpiar cualquier mensaje
         document.getElementById("search-message").innerHTML = "";
+      });
+  });
+
+// Realizar el registro de la consulta
+document
+  .getElementById("register-consultation-form")
+  .addEventListener("submit", function (e) {
+    e.preventDefault(); // Evitar el envío del formulario por defecto
+
+    // Obtener el ID de la reserva desde el campo oculto
+    const reservaId = document.getElementById("paciente-id").value;
+    const motivoConsulta = document.getElementById("motivo-consulta").value;
+    const diagnostico = document.getElementById("diagnostico").value;
+    const observaciones = document.getElementById("observaciones").value;
+
+    // Crear el objeto que se va a enviar para la consulta
+    const consultaData = {
+      reservaID: reservaId,
+      motivo_Consulta: motivoConsulta,
+      diagnostico: diagnostico,
+      observaciones: observaciones,
+    };
+
+    // Llamada a la API para insertar la consulta
+    fetch("https://Clinica.somee.com/api/InsertPaciente/insert", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(consultaData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Verificar si la inserción fue exitosa
+        if (data) {
+          console.log("Consulta insertada con éxito:", data);
+          alert("Consulta registrada con éxito.");
+        } else {
+          console.log("Error al insertar la consulta:", data);
+          alert("Hubo un error al registrar la consulta.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al insertar la consulta:", error);
+        alert("Hubo un error al registrar la consulta.");
       });
   });
