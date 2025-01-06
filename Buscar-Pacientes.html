@@ -19,6 +19,10 @@
     <link
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
@@ -268,7 +272,17 @@
                       required
                       class="form-control" />
                   </div>
-                  <button type="submit" class="btn btn-primary">Buscar</button>
+                  <!-- Botón para buscar el campo de búsqueda -->
+                  <button type="submit" class="btn btn-primary mr-2">
+                    Buscar
+                  </button>
+                  <!-- Botón para limpiar el campo de búsqueda -->
+                  <button
+                    type="button"
+                    id="clear-search-btn"
+                    class="btn btn-danger">
+                    Limpiar
+                  </button>
                 </form>
                 <!-- Contenedor para mensajes o resultados -->
                 <div id="search-message" class="mt-3"></div>
@@ -284,15 +298,18 @@
               </div>
               <div class="card-body">
                 <form id="update-patient-form" class="form" action="#">
+                  <!-- Campo Oculto para ID del Paciente -->
+                  <input type="hidden" id="paciente-id" name="paciente-id" />
+
                   <div class="form-row">
                     <!-- Campo para el nombre -->
                     <div class="col-lg-6 col-md-6 col-12">
                       <div class="form-group">
-                        <label for="update-first-name">Nombre:</label>
+                        <label for="first-name">Nombre:</label>
                         <input
                           type="text"
-                          id="update-first-name"
-                          name="update-first-name"
+                          id="first-name"
+                          name="first-name"
                           value=""
                           required
                           class="form-control" />
@@ -301,11 +318,11 @@
                     <!-- Campo para el apellido -->
                     <div class="col-lg-6 col-md-6 col-12">
                       <div class="form-group">
-                        <label for="update-last-name">Apellido:</label>
+                        <label for="last-name">Apellido:</label>
                         <input
                           type="text"
-                          id="update-last-name"
-                          name="update-last-name"
+                          id="last-name"
+                          name="last-name"
                           value=""
                           required
                           class="form-control" />
@@ -314,11 +331,11 @@
                     <!-- Campo para el correo electrónico -->
                     <div class="col-lg-6 col-md-6 col-12">
                       <div class="form-group">
-                        <label for="update-email">Correo Electrónico:</label>
+                        <label for="email">Correo Electrónico:</label>
                         <input
                           type="email"
-                          id="update-email"
-                          name="update-email"
+                          id="email"
+                          name="email"
                           value=""
                           required
                           class="form-control" />
@@ -327,11 +344,11 @@
                     <!-- Campo para la cédula -->
                     <div class="col-lg-6 col-md-6 col-12">
                       <div class="form-group">
-                        <label for="update-cedula">Cédula:</label>
+                        <label for="cedula">Cédula:</label>
                         <input
                           type="text"
-                          id="update-cedula"
-                          name="update-cedula"
+                          id="cedula"
+                          name="cedula"
                           value=""
                           required
                           class="form-control" />
@@ -340,11 +357,11 @@
                     <!-- Campo para el número de teléfono -->
                     <div class="col-lg-6 col-md-6 col-12">
                       <div class="form-group">
-                        <label for="update-phone">Número de Teléfono:</label>
+                        <label for="phone">Número de Teléfono:</label>
                         <input
                           type="tel"
-                          id="update-phone"
-                          name="update-phone"
+                          id="phone"
+                          name="phone"
                           value=""
                           required
                           class="form-control" />
@@ -358,8 +375,8 @@
                         >
                         <input
                           type="date"
-                          id="update-birth-date"
-                          name="update-birth-date"
+                          id="birth-date"
+                          name="birth-date"
                           value=""
                           required
                           class="form-control" />
@@ -369,11 +386,11 @@
                   <!-- Campo para la dirección -->
                   <div class="form-row">
                     <div class="col-md-12 mb-3">
-                      <label for="update-direccion">Dirección</label>
+                      <label for="direccion">Dirección</label>
                       <textarea
                         class="form-control"
-                        id="update-direccion"
-                        name="update-direccion"
+                        id="direccion"
+                        name="direccion"
                         rows="3"
                         required></textarea>
                     </div>
@@ -457,11 +474,6 @@
     <!-- Scripts personalizados para todas las páginas -->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Plugins a nivel de página -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Scripts personalizados a nivel de página -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/buscar-paciente.js"></script>
   </body>
 </html>

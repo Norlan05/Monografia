@@ -258,8 +258,23 @@
                           placeholder="Ingrese la cédula"
                           required />
                       </div>
+                      <!-- Botón para buscar el campo de búsqueda -->
                       <button type="submit" class="btn btn-primary">
                         Buscar
+                      </button>
+                      <!-- Botón para limpiar el campo de búsqueda -->
+                      <button
+                        type="button"
+                        id="clear-search-btn"
+                        class="btn btn-danger">
+                        Limpiar
+                      </button>
+                      <!-- Botón para exportar a PDF -->
+                      <button
+                        type="button"
+                        id="export-pdf-btn"
+                        class="btn btn-success">
+                        Exportar a PDF
                       </button>
                     </form>
                   </div>
@@ -392,9 +407,12 @@
 
     <!-- Plugins a nivel de página -->
     <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Incluir jsPDF desde CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- Scripts personalizados a nivel de página -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/historial.js"></script>
   </body>
 </html>
