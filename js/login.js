@@ -1,85 +1,80 @@
-document
-  .getElementById("loginForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault(); // Previene el envío del formulario
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-    // Validar formato del correo
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      Swal.fire("Error", "Por favor, ingrese un correo válido.", "error");
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!username || !password) {
+      showAlert("Error", "Por favor, ingrese usuario y contraseña.", "error");
       return;
     }
 
-    if (password.trim() === "") {
-      Swal.fire("Error", "Por favor, ingrese la contraseña.", "error");
-      return;
-    }
-
-    // Muestra un mensaje de carga
-    Swal.fire({
-      title: "Iniciando sesión...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
-    authenticateUser(email, password);
+    showLoading("Iniciando sesión...");
+    authenticateUser(username, password);
   });
 
-function authenticateUser(email, password) {
-  const apiUrl = "http://Clinica.somee.com/api/Select/login";
-  const timeoutDuration = 5000; // 5 segundos de tiempo de espera
+  function authenticateUser(username, password) {
+    const apiUrl = "https://Clinica.somee.com/api/Auth/login";
+    const timeoutDuration = 7000;
 
-  const controller = new AbortController(); // Crear controlador para cancelar solicitud
-  const signal = controller.signal;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      controller.abort();
+      showAlert(
+        "Error",
+        "La solicitud tardó demasiado. Inténtelo de nuevo.",
+        "error"
+      );
+    }, timeoutDuration);
 
-  // Configura el timeout para cancelar el fetch si se excede el tiempo
-  const timeout = setTimeout(() => {
-    controller.abort(); // Cancela la solicitud
+    fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ Username: username, Password: password }),
+      signal: controller.signal,
+    })
+      .then((response) => {
+        clearTimeout(timeout);
+        return response.json();
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  }
+
+  function handleResponse(data) {
     Swal.close();
-    Swal.fire(
-      "Error",
-      "La solicitud tardó demasiado. Inténtelo de nuevo.",
-      "error"
-    );
-  }, timeoutDuration);
+    if (data.message === "Usuario autenticado con éxito") {
+      window.location.href = "index.html?myVar=true";
+    } else {
+      showAlert("Error", "Usuario o contraseña incorrectos.", "error");
+    }
+  }
 
-  fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email: email, password: password }),
-    signal: signal,
-  })
-    .then((response) => {
-      clearTimeout(timeout); // Cancela el timeout si la respuesta llega a tiempo
-      return response.json();
-    })
-    .then((data) => {
-      Swal.close(); // Cierra el mensaje de carga
+  function handleError(error) {
+    if (error.name === "AbortError") {
+      console.error("Solicitud cancelada por timeout.");
+    } else {
+      console.error("Error al autenticar:", error);
+      showAlert(
+        "Error",
+        "Hubo un error al intentar iniciar sesión. Intente de nuevo.",
+        "error"
+      );
+    }
+  }
 
-      if (data.success || data === true) {
-        // Redirige al index con el parámetro `myVar=true`
-        window.location.href = "index.html?myVar=true";
-      } else {
-        Swal.fire("Error", "Usuario o contraseña incorrectos.", "error");
-      }
-    })
-    .catch((error) => {
-      if (error.name === "AbortError") {
-        console.error("La solicitud fue cancelada debido a timeout.");
-      } else {
-        console.error("Error al autenticar:", error);
-        Swal.fire(
-          "Error",
-          "Hubo un error al intentar iniciar sesión. Intente de nuevo.",
-          "error"
-        );
-      }
+  function showAlert(title, text, icon) {
+    Swal.fire(title, text, icon);
+  }
+
+  function showLoading(message) {
+    Swal.fire({
+      title: message,
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading(),
     });
-}
+  }
+});
