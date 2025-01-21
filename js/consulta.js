@@ -77,6 +77,10 @@ document
         document.getElementById("phone").value = "";
         document.getElementById("date").value = "";
         document.getElementById("time").value = "";
+        document.getElementById("motivo-consulta").value = "";
+        document.getElementById("diagnostico").value = "";
+        document.getElementById("observaciones").value = "";
+        document.getElementById("paciente-id").value = ""; // Limpiar el campo oculto
 
         // Limpiar cualquier mensaje
         document.getElementById("search-message").innerHTML = "";
@@ -114,16 +118,52 @@ document
       .then((response) => response.json())
       .then((data) => {
         // Verificar si la inserción fue exitosa
+        console.log(data); // Verifica lo que contiene data
         if (data) {
           console.log("Consulta insertada con éxito:", data);
-          alert("Consulta registrada con éxito.");
+          Swal.fire({
+            icon: "success",
+            title: "Consulta registrada con éxito.",
+            showConfirmButton: true,
+            timer: 3000, // Opcional: el mensaje se cerrará automáticamente después de 3 segundos
+          }).then(() => {
+            // Limpiar los campos del formulario de datos del paciente después del éxito
+            document.getElementById("first-name").value = "";
+            document.getElementById("cedula").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("date").value = "";
+            document.getElementById("time").value = "";
+            document.getElementById("motivo-consulta").value = "";
+            document.getElementById("diagnostico").value = "";
+            document.getElementById("observaciones").value = "";
+            document.getElementById("paciente-id").value = ""; // Limpiar el campo oculto
+
+            // Limpiar los campos de búsqueda
+            document.getElementById("search-value").value = ""; // Limpiar el valor de búsqueda
+
+            // Limpiar cualquier mensaje
+            document.getElementById("search-message").innerHTML = "";
+          });
         } else {
           console.log("Error al insertar la consulta:", data);
-          alert("Hubo un error al registrar la consulta.");
+          Swal.fire({
+            icon: "error",
+            title: "Hubo un error al registrar la consulta.",
+            text: "Por favor, intente nuevamente.",
+            showConfirmButton: true,
+            timer: 5000, // Opcional: el mensaje se cerrará automáticamente después de 5 segundos
+          });
         }
       })
       .catch((error) => {
         console.error("Error al insertar la consulta:", error);
-        alert("Hubo un error al registrar la consulta.");
+        Swal.fire({
+          icon: "error",
+          title: "Hubo un error al registrar la consulta.",
+          text: "Por favor, intente nuevamente.",
+          showConfirmButton: true,
+          timer: 5000, // Opcional: el mensaje se cerrará automáticamente después de 5 segundos
+        });
       });
   });
