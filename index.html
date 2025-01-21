@@ -287,9 +287,8 @@
 
           <!-- Comienzo del contenido de la página -->
           <div class="container-fluid">
-            <!-- Fila de contenido -->
             <div class="row">
-              <!--Total de pacientes Registrados-->
+              <!-- Total de pacientes Registrados -->
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
@@ -300,7 +299,8 @@
                           Total de pacientes Registrados
                         </div>
                         <div
-                          class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                          class="h5 mb-0 font-weight-bold text-gray-800"
+                          id="totalPacientes"></div>
                       </div>
                       <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -310,7 +310,7 @@
                 </div>
               </div>
 
-              <!-- Tarjeta de Citas(Canceladas) -->
+              <!-- Citas Canceladas -->
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                   <div class="card-body">
@@ -321,7 +321,8 @@
                           Citas Canceladas
                         </div>
                         <div
-                          class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                          class="h5 mb-0 font-weight-bold text-gray-800"
+                          id="citasCanceladas"></div>
                       </div>
                       <div class="col-auto">
                         <i
@@ -332,7 +333,7 @@
                 </div>
               </div>
 
-              <!-- Tarjeta de Citas(atendidas) -->
+              <!-- Citas Atendidas -->
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                   <div class="card-body">
@@ -342,12 +343,9 @@
                           class="text-xs font-weight-bold text-info text-uppercase mb-1">
                           Total de citas atendidas
                         </div>
-                        <div class="row no-gutters align-items-center">
-                          <div class="col-auto">
-                            <div
-                              class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
-                          </div>
-                        </div>
+                        <div
+                          class="h5 mb-0 font-weight-bold text-gray-800"
+                          id="citasAtendidas"></div>
                       </div>
                       <div class="col-auto">
                         <i
@@ -358,7 +356,7 @@
                 </div>
               </div>
 
-              <!--tarjeta de solicitudes pendientes -->
+              <!-- Citas Pendientes -->
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                   <div class="card-body">
@@ -366,10 +364,11 @@
                       <div class="col mr-2">
                         <div
                           class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                          Citas Pendiente
+                          Citas Pendientes
                         </div>
                         <div
-                          class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                          class="h5 mb-0 font-weight-bold text-gray-800"
+                          id="citasPendientes"></div>
                       </div>
                       <div class="col-auto">
                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -383,13 +382,15 @@
 
             <div class="row">
               <!-- Area Chart -->
+              <!-- Bar Chart -->
+              <!-- Gráfico de barras para las citas por mes -->
               <div class="col-xl-8 col-lg-7">
                 <div class="card shadow mb-4">
-                  <!-- Card Header - Dropdown -->
+                  <!-- Card Header -->
                   <div
                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Earnings Overview
+                      Citas por Mes
                     </h6>
                     <div class="dropdown no-arrow">
                       <a
@@ -406,20 +407,19 @@
                       <div
                         class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                         aria-labelledby="dropdownMenuLink">
-                        <div class="dropdown-header">Dropdown Header:</div>
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-header">Opciones:</div>
+                        <a class="dropdown-item" href="#">Ver Todos</a>
+                        <a class="dropdown-item" href="#">Exportar Datos</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"
-                          >Something else here</a
-                        >
+                        <a class="dropdown-item" href="#">Algo más</a>
                       </div>
                     </div>
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
+                    <!-- Área del gráfico -->
                     <div class="chart-area">
-                      <canvas id="myAreaChart"></canvas>
+                      <canvas id="myBarChart"></canvas>
                     </div>
                   </div>
                 </div>
@@ -552,5 +552,10 @@
     <!-- Scripts personalizados a nivel de página -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/dashboard.js"></script>
+    <!-- Incluir Chart.js desde CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Incluir chartjs-plugin-datalabels desde CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   </body>
 </html>
