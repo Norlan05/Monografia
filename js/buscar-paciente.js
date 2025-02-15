@@ -62,7 +62,7 @@ document
         console.error("Error al realizar la búsqueda:", error);
         document.getElementById(
           "search-message"
-        ).innerHTML = `No hay reserva para el día de hoy`;
+        ).innerHTML = `Paciente no encontrado. Registre al paciente.`;
       });
   });
 
