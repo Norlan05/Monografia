@@ -47,8 +47,8 @@ function displayReservas(reservas) {
         reserva.fecha,
         convertirHoraAMPM(reserva.hora),
         reserva.estado,
-        `<button class="btn btn-primary" onclick="actualizar('${reserva.id}', 'Confirmado',2)">Confirmar</button>
-         <button class="btn btn-danger" onclick="actualizar('${reserva.id}', 'Cancelado',3)">Cancelar</button>`,
+        `<button class="btn btn-primary" onclick="actualizar('${reserva.id}', 'Confirmado', 2, '${reserva.nombre}', '${reserva.apellido}', '${reserva.correo_electronico}', '${reserva.numero_telefono}', '${reserva.cedula}', '${reserva.fecha}', '${reserva.hora}')">Confirmar</button>
+         <button class="btn btn-danger" onclick="actualizar('${reserva.id}', 'Cancelado', 3, '${reserva.nombre}', '${reserva.apellido}', '${reserva.correo_electronico}', '${reserva.numero_telefono}', '${reserva.cedula}', '${reserva.fecha}', '${reserva.hora}')">Cancelar</button>`,
       ];
     });
 
@@ -96,7 +96,20 @@ function displayReservas(reservas) {
     tableBody.appendChild(row); // Añadir un mensaje si no hay reservas
   }
 }
-function actualizar(id, estado, estado_id) {
+
+// Función para actualizar el estado de una reserva
+function actualizar(
+  id,
+  estado,
+  estado_id,
+  nombre,
+  apellido,
+  correo_electronico,
+  numero_telefono,
+  cedula,
+  fecha,
+  hora
+) {
   fetch(apiUpdateUrl, {
     method: "POST",
     headers: {
@@ -106,6 +119,13 @@ function actualizar(id, estado, estado_id) {
       id: id,
       estado_id: estado_id,
       descripcion: estado,
+      nombre: nombre,
+      apellido: apellido,
+      correo_electronico: correo_electronico,
+      numero_telefono: numero_telefono,
+      cedula: cedula,
+      fecha: fecha,
+      hora: hora,
     }),
   })
     .then((response) => {
