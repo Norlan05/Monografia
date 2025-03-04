@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Generar las opciones de hora
   const generateTimeOptions = () => {
     const start = 8; // Hora de inicio: 8:00 AM
-    const end = 19; // Hora de fin: 7:00 PM
+    const end = 18; // Hora de fin: 7:00 PM
     timeSelect.innerHTML =
       '<option value="" disabled selected>Selecciona la Hora</option>';
     for (let hour = start; hour < end; hour++) {
@@ -46,14 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Validaciones
     if (!date) errors.push("Por favor, selecciona una fecha.");
     if (!time) errors.push("Por favor, selecciona una hora.");
-
-    // Validación del teléfono
-    const phoneRegex = /^(\+505\d{8}|\d{8})$/;
-    if (!phoneRegex.test(phone)) {
-      errors.push(
-        "El número de teléfono debe ser en formato +50582100905 o 82100905."
-      );
-    }
 
     return errors;
   };

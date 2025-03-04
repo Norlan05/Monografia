@@ -108,7 +108,7 @@ document
     };
 
     // Llamada a la API para insertar la consulta
-    fetch("https://Clinica.somee.com/api/InsertPaciente/insert", {
+    fetch("https://Clinica.somee.com/api/RegistroConsulta/insert", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
