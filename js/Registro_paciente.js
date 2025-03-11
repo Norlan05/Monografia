@@ -16,7 +16,7 @@ document
 
     try {
       const response = await fetch(
-        "https://clinica.somee.com/api/InsertPaciente",
+        "https://clinica.somee.com/api/InsertarPaciente",
         {
           method: "POST",
           headers: {
