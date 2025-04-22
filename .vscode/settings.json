@@ -1,3 +1,4 @@
 {
-  "livePreview.defaultPreviewPath": "/blanco.html"
+  "livePreview.defaultPreviewPath": "/blanco.html",
+  "liveServer.settings.port": 5501
 }
