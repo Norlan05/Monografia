@@ -479,7 +479,9 @@
               data-dismiss="modal">
               Cancelar
             </button>
-            <a class="btn btn-primary" href="login.html">Cerrar sesión</a>
+            <a class="btn btn-primary" href="#" onclick="cerrarSesion()"
+              >Cerrar sesión</a
+            >
           </div>
         </div>
       </div>
@@ -496,9 +498,19 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script src="js/dashboard.js"></script>
+    <!-- Script para validar la sesión -->
+    <script src="js/check-session.js"></script>
+
     <!-- Incluir Chart.js desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Incluir chartjs-plugin-datalabels desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- Script para cerrar sesión -->
+    <script>
+      function cerrarSesion() {
+        sessionStorage.clear();
+        window.location.href = "login.html";
+      }
+    </script>
   </body>
 </html>

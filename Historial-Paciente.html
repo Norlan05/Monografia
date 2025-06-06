@@ -389,7 +389,9 @@
               data-dismiss="modal">
               Cancelar
             </button>
-            <a class="btn btn-primary" href="login.html">Cerrar sesión</a>
+            <a class="btn btn-primary" href="#" onclick="cerrarSesion()"
+              >Cerrar sesión</a
+            >
           </div>
         </div>
       </div>
@@ -408,7 +410,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- Scripts personalizados a nivel de página -->
+    <!-- Script para validar la sesión -->
+    <script src="js/check-session.js"></script>
 
     <script src="js/historial.js"></script>
+    <!-- Script para cerrar sesión -->
+    <script>
+      function cerrarSesion() {
+        sessionStorage.clear();
+        window.location.href = "login.html";
+      }
+    </script>
   </body>
 </html>

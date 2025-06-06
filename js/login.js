@@ -47,6 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Comprobar si la respuesta tiene el mensaje de acceso correcto
         if (data.message === "Acceso correcto") {
+          // ✅ Guardar que la sesión está iniciada
+          sessionStorage.setItem("isLoggedIn", "true");
+
+          // ✅ Guardar el email del usuario
+          sessionStorage.setItem("userEmail", emailInput.value);
+
           Swal.fire({
             icon: "success",
             title: "¡Bienvenido!",

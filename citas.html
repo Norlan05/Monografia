@@ -22,10 +22,6 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
       rel="stylesheet" />
-    <!-- Agregar Bootstrap desde CDN para estilos de botones -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-      rel="stylesheet" />
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
@@ -306,7 +302,9 @@
               data-dismiss="modal">
               Cancelar
             </button>
-            <a class="btn btn-primary" href="login.html">Cerrar sesión</a>
+            <a class="btn btn-primary" href="#" onclick="cerrarSesion()"
+              >Cerrar sesión</a
+            >
           </div>
         </div>
       </div>
@@ -328,8 +326,16 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-
+    <script src="js/check-session.js"></script>
     <!-- Incluir el script mostrarReserva.js -->
     <script src="js/mostrarreserva.js"></script>
+    <script>
+      function cerrarSesion() {
+        // Eliminar la sesión
+        sessionStorage.clear();
+        // Redirigir a login
+        window.location.href = "login.html";
+      }
+    </script>
   </body>
 </html>

@@ -458,7 +458,9 @@
               data-dismiss="modal">
               Cancelar
             </button>
-            <a class="btn btn-primary" href="login.html">Cerrar sesión</a>
+            <a class="btn btn-primary" href="#" onclick="cerrarSesion()"
+              >Cerrar sesión</a
+            >
           </div>
         </div>
       </div>
@@ -473,7 +475,14 @@
 
     <!-- Scripts personalizados para todas las páginas -->
     <script src="js/sb-admin-2.min.js"></script>
-
+    <script src="js/check-session.js"></script>
     <script src="js/buscar-paciente.js"></script>
+    <!-- Script para cerrar sesión -->
+    <script>
+      function cerrarSesion() {
+        sessionStorage.clear();
+        window.location.href = "login.html";
+      }
+    </script>
   </body>
 </html>
