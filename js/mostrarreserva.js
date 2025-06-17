@@ -138,10 +138,29 @@ function actualizar(
     .then((data) => {
       console.log("Success:", data); // Muestra los datos de la respuesta en la consola
       fetchReservas(); // Aquí es donde se llama la función reserva
+      if (estado === "Confirmado") {
+        Swal.fire({
+          icon: "success",
+          title: "¡Cita confirmada!",
+          text: "La cita ha sido confirmada correctamente.",
+        });
+      } else if (estado === "Cancelado") {
+        Swal.fire({
+          icon: "warning",
+          title: "Cita cancelada",
+          text: "La cita ha sido cancelada.",
+        });
+      }
     })
-    .catch((error) => console.error("Error:", error)); // Maneja cualquier error
+    .catch((error) => {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrió un error al actualizar la cita.",
+      });
+    });
 }
-
 // Llamar a la función para obtener las reservas cuando se carga la página
 window.onload = fetchReservas;
 
