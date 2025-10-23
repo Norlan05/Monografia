@@ -92,6 +92,12 @@ document
   .getElementById("register-consultation-form")
   .addEventListener("submit", function (e) {
     e.preventDefault(); // Evitar el envío del formulario por defecto
+    const form = document.getElementById("register-consultation-form");
+    const boton = form.querySelector('button[type="submit"]');
+    // 🔒 Bloquear el botón al enviar
+    boton.disabled = true;
+    boton.innerText = "Procesando...";
+    console.log("✅ Botón bloqueado:", boton.disabled);
 
     // Obtener el ID de la reserva desde el campo oculto
     const reservaId = document.getElementById("paciente-id").value;
@@ -165,5 +171,11 @@ document
           showConfirmButton: true,
           timer: 5000, // Opcional: el mensaje se cerrará automáticamente después de 5 segundos
         });
+      })
+      .finally(() => {
+        // 🔓 Desbloquear el botón siempre
+        boton.disabled = false;
+        boton.innerText = "Guardar Consulta";
+        console.log("🔓 Botón desbloqueado:", boton.disabled);
       });
   });

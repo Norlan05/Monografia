@@ -92,6 +92,12 @@ document
   .getElementById("update-patient-form")
   .addEventListener("submit", function (e) {
     e.preventDefault();
+    const form = document.getElementById("update-patient-form");
+    const boton = form.querySelector('button[type="submit"]');
+    // 🔒 Bloquear el botón al hacer clic
+    boton.disabled = true;
+    boton.innerText = "Procesando...";
+    console.log("✅ Botón bloqueado:", boton.disabled);
 
     const pacienteId = document.getElementById("paciente-id").value;
     const pacienteData = {
@@ -140,5 +146,11 @@ document
           title: "¡Hubo un problema!",
           text: "No se pudo actualizar el paciente. Intente nuevamente.",
         });
+      })
+      .finally(() => {
+        // 🔓 Desbloquear el botón siempre al terminar
+        boton.disabled = false;
+        boton.innerText = "Guardar Cambios";
+        console.log("🔓 Botón desbloqueado:", boton.disabled);
       });
   });

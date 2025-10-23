@@ -3,6 +3,14 @@ document
   .addEventListener("submit", async function (event) {
     event.preventDefault();
 
+    const form = document.getElementById("reservation-form");
+    const boton = form.querySelector('button[type="submit"]');
+
+    // 🔒 Bloquear el botón al enviar
+    boton.disabled = true;
+    boton.innerText = "Procesando...";
+    console.log("✅ Botón bloqueado:", boton.disabled);
+
     // Datos del formulario
     const data = {
       Nombre: document.getElementById("first-name").value,
@@ -27,14 +35,30 @@ document
       );
 
       if (!response.ok) {
-        // Obtener el error como JSON
-        const errorDetails = await response.json();
-        throw new Error(errorDetails.error); // Usar el campo 'error' del JSON
+        // Manejo seguro si el JSON está vacío o mal formado
+        let errorDetails = {};
+        try {
+          const text = await response.text();
+          errorDetails = text
+            ? JSON.parse(text)
+            : { error: "Error desconocido" };
+        } catch (e) {
+          console.warn("⚠️ No se pudo parsear JSON del error:", e);
+          errorDetails = { error: "Error desconocido" };
+        }
+        throw new Error(errorDetails.error);
       }
 
-      const result = await response.json();
+      const resultText = await response.text();
+      let result = {};
+      try {
+        result = resultText ? JSON.parse(resultText) : {};
+      } catch {
+        result = {};
+      }
+
       Swal.fire("¡Éxito!", "Paciente registrado correctamente.", "success");
-      document.getElementById("reservation-form").reset();
+      form.reset();
     } catch (error) {
       console.error("Error al registrar:", error);
       Swal.fire(
@@ -42,5 +66,10 @@ document
         "Ya existe un paciente con esta cédula o correo electrónico.",
         "error"
       );
+    } finally {
+      // 🔓 Volver a habilitar el botón
+      boton.disabled = false;
+      boton.innerText = "Registrar Paciente";
+      console.log("🔓 Botón desbloqueado:", boton.disabled);
     }
   });
